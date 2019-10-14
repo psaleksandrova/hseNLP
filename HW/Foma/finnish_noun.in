@@ -6,6 +6,16 @@ talo+Sg+Part
 talo+Pl+Part
 talo+Sg+In
 talo+Pl+In
+talo+Sg+All
+talo+Pl+All
+talo+Sg+El
+talo+Pl+El
+talo+Sg+Ill
+talo+Pl+Ill
+talo+Sg+Ad
+talo+Pl+Ad
+talo+Sg+Abl
+talo+Pl+Abl
 
 elämä+Sg+Nom
 elämä+Pl+Nom
@@ -15,6 +25,16 @@ elämä+Sg+Part
 elämä+Pl+Part
 elämä+Sg+In
 elämä+Pl+In
+elämä+Sg+All
+elämä+Pl+All
+elämä+Sg+El
+elämä+Pl+El
+elämä+Sg+Ill
+elämä+Pl+Ill
+elämä+Sg+Ad
+elämä+Pl+Ad
+elämä+Sg+Abl
+elämä+Pl+Abl
 
 kuu+Sg+Nom
 kuu+Pl+Nom
@@ -24,6 +44,16 @@ kuu+Sg+Part
 kuu+Pl+Part
 kuu+Sg+In
 kuu+Pl+In
+kuu+Sg+All
+kuu+Pl+All
+kuu+Sg+El
+kuu+Pl+El
+kuu+Sg+Ill
+kuu+Pl+Ill
+kuu+Sg+Ad
+kuu+Pl+Ad
+kuu+Sg+Abl
+kuu+Pl+Abl
 
 työ+Sg+Nom
 työ+Pl+Nom
@@ -33,6 +63,16 @@ työ+Sg+Part
 työ+Pl+Part
 työ+Sg+In
 työ+Pl+In
+työ+Sg+All
+työ+Pl+All
+työ+Sg+El
+työ+Pl+El
+työ+Sg+Ill
+työ+Pl+Ill
+työ+Sg+Ad
+työ+Pl+Ad
+työ+Sg+Abl
+työ+Pl+Abl
 
 sukka+Sg+Nom
 sukka+Pl+Nom
@@ -42,6 +82,16 @@ sukka+Sg+Part
 sukka+Pl+Part
 sukka+Sg+In
 sukka+Pl+In
+sukka+Sg+All
+sukka+Pl+All
+sukka+Sg+El
+sukka+Pl+El
+sukka+Sg+Ill
+sukka+Pl+Ill
+sukka+Sg+Ad
+sukka+Pl+Ad
+sukka+Sg+Abl
+sukka+Pl+Abl
 
 poika+Sg+Nom
 poika+Pl+Nom
@@ -51,6 +101,16 @@ poika+Sg+Part
 poika+Pl+Part
 poika+Sg+In
 poika+Pl+In
+poika+Sg+All
+poika+Pl+All
+poika+Sg+El
+poika+Pl+El
+poika+Sg+Ill
+poika+Pl+Ill
+poika+Sg+Ad
+poika+Pl+Ad
+poika+Sg+Abl
+poika+Pl+Abl
 
 kaappi+Pl+In
 matto+Pl+All
@@ -73,10 +133,13 @@ muna+Pl+Part
 kuuma+Pl+In
 
 kampa+Sg+All
+kampa+Sg+Ill
 kenkä+Pl+Nom
 ilta+Sg+All
+ilta+Sg+Ad
 kerta+Sg+Gen
 suku+Sg+In
+suku+Pl+Abl
 
 puu+Pl+Part
 tie+Pl+All
@@ -85,8 +148,11 @@ avain+Sg+Nom
 avain+Sg+Part
 avain+Sg+Gen
 avain+Pl+In
+avain+Pl+Ad
 
 työtön+Sg+Nom
 työtön+Sg+Part
 työtön+Sg+Gen
 työtön+Pl+In
+työtön+Pl+Abl
+työtön+Sg+Ill
