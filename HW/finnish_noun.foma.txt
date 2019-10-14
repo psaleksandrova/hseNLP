@@ -1,0 +1,111 @@
+# Определение алфавита, звуков (в частности, типов гласных)
+define Consonant b | c | d | f | g | h | j | k | l | m | n | p | q | r | s | t | v | w | x | z ;
+define FrontVowel ä | ö | y ;
+define NeutralVowel e | i ;
+define BackVowel a | o | u ;
+define Vowel FrontVowel | NeutralVowel | BackVowel | A | E;
+define Letter Vowel | Consonant;
+
+# Определение грамматических категорий (падежей и чисел)
+define Case "+Nom" | "+Gen" | "+Part" | "+In" | "+All" | "+El" | "+Ill" | "+Ad" | "+Abl" ;
+define Number "+Sg" | "+Pl" ; 
+
+# Определение типов основ, а также того, как должна выглядеть подающаяся на вход строка
+define FrontStem [Consonant* [ FrontVowel | NeutralVowel ] ]+ Consonant*;
+define BackStem [Consonant* [ BackVowel | NeutralVowel ] ]* [Consonant* BackVowel] [Consonant* [ BackVowel | NeutralVowel ] ]* Consonant*;
+define Stem Letter+;
+
+define Input Stem Number Case;
+
+# Определение формы номинатива для единственного и множественного чисел
+define NomPl "+Pl" "+Nom" -> "^" t || _ ;
+define NomSg "+Sg" "+Nom" -> "^" || _ ;
+define Nominatives NomPl .o. NomSg ;
+
+# Определение формы генитива для единственного и множественного чисел
+define GenDen "+Gen" -> d e n || Vowel Vowel "+Pl" _ ;
+define Gen "+Gen" -> E n || _ ;
+define Genetive GenDen .o. Gen ;
+
+# Определение партитива
+define PartTa "+Part" -> t A || [ Consonant Vowel Vowel | Consonant ] Number _ ;
+define PartA "+Part" -> A || _ ;
+
+# Определение иллатива
+# Определение множественного числа
+define IllPlV "+Ill" -> h i n || Vowel "+Pl" _ ;
+define IllPlC "+Ill" -> i n || Consonant "+Pl" _ ;
+
+# Отдельный случай для аффикса seen
+define IllSeen "+Ill" -> s e e n || Vowel+ Consonant+ [ a a | o o | u u | e e | i i | ä ä | ö ö | y y ] "+Sg" _ ;
+
+# Определение иллатива для односложных слов + объединение в одно правило
+define IllHan "+Sg" "+Ill" -> h a n || .#. Consonant+ Vowel+ a _ ;
+define IllHon "+Sg" "+Ill" -> h o n || .#. Consonant+ Vowel+ o _ ;
+define IllHun "+Sg" "+Ill" -> h u n || .#. Consonant+ Vowel+ u _ ;
+define IllHen "+Sg" "+Ill" -> h e n || .#. Consonant+ Vowel+ e _ ;
+define IllHin "+Sg" "+Ill" -> h i n || .#. Consonant+ Vowel+ I _ ;
+define IllHän "+Sg" "+Ill" -> h ä n || .#. Consonant+ Vowel+ ä _ ;
+define IllHön "+Sg" "+Ill" -> h ö n || .#. Consonant+ Vowel+ ö _ ;
+define IllHyn "+Sg" "+Ill" -> h y n || .#. Consonant+ Vowel+ y _ ;
+define IllHVn IllHan .o. IllHon .o. IllHun .o. IllHen .o. IllHin .o. IllHän .o. IllHön .o. IllHyn ;
+
+# Определение обычного иллатива - удвоение гласных + объединение в одно правило
+define Illan "+Sg" "+Ill" -> a n || a _ ; 
+define Illon "+Sg" "+Ill" -> o n || o _ ; 
+define Illun "+Sg" "+Ill" -> u n || u _ ; 
+define Illen "+Sg" "+Ill" -> e n || e _ ; 
+define Illin "+Sg" "+Ill" -> I n || I _ ; 
+define Illän "+Sg" "+Ill" -> ä n || ä _ ; 
+define Illön "+Sg" "+Ill" -> ö n || ö _ ; 
+define Illyn "+Sg" "+Ill" -> y n || y _ ; 
+define IllVn Illan .o. Illon .o. Illun .o. Illen .o. Illin .o. Illän .o. Illön .o.Illyn ;
+
+# Собственно, определение иллатива
+define Illative IllPlV .o. IllPlC .o. IllSeen .o. IllHVn .o. IllVn ;
+
+# Определение оставшихся локативных падежей (!!! в случае аллатива должно быть l l e)
+define LocativeCases "+In" -> s s A , "+All" -> l l e, "+El" -> s t A, "+Ad" -> l l A, "+Abl" -> l t A || _ ;
+
+define OtherCases PartTa .o. PartA .o. Illative  .o. LocativeCases ;
+
+# Определение чередования гласных в основах
+define Sg "+Sg" -> "^" || _ ;
+define OmitA ä -> 0, i -> 0 || _ "+Pl";
+define Ai2Oi a -> o || [ a | e | i ] Vowel* Consonant+ _ "+Pl";
+define Ai2i a -> 0 || [ o | u ] Vowel* Consonant+ _ "+Pl";
+define OmitFirst Vowel -> 0 || _ Vowel "+Pl" Consonant;
+define Pl "+Pl" -> "^" i || _ ;
+
+define NumberInfl Sg .o. OmitA .o. Ai2i .o. Ai2Oi .o. OmitFirst .o. Pl ;
+
+# В позиции между двумя гласными i заменяется на j
+# После основ заднего ряда используется a, а после переднего - ä (сингармонизм)
+define JotPl i -> j || Vowel "^"* _ "^"* Vowel ;
+define HarmonyBack A -> a || BackStem "^" Letter* _;
+define HarmonyFront A -> ä || FrontStem "^" Letter* _;
+
+define Phonetics JotPl .o. HarmonyBack .o. HarmonyFront ;
+
+# Определение чередования согласных в основах
+# Определение правила для E: в случае позиции после гласного основы Е опускается, в иных случаях переходит в нейтральный
+define DoublePTK p p -> p , t t -> t , k k -> k || Letter _ "^"* Vowel "^"* Consonant [ .#. | Consonant ] ;
+define SingleP p -> v || Vowel _ "^"* Vowel "^"* Consonant [ .#. | Consonant ] ;
+define SingleTK t -> d , k -> 0 || Letter _ "^"* Vowel "^"* Consonant [ .#. | Consonant ] ; 
+define TwoLetter m p -> m m , n t -> n n , n k -> n g , l t -> l l , r t -> r r || Letter _ "^"* Vowel "^"* Consonant [ .#. | Consonant ] ;
+define ThreeLetter l k e -> l j e , r k e -> r j e , h k e -> h j e , u k u -> u v u || Letter _ "^"* Consonant [ .#. | Consonant ] ;
+define N2M i n -> i m , t ö n -> t t ö m || _ "^" Vowel;
+define EOmit E -> 0 || Vowel "^" _;
+define EReal E -> e || _;
+
+define Alternations N2M  .o. EOmit .o. EReal .o. ThreeLetter .o. TwoLetter .o. SingleP .o. SingleTK .o. DoublePTK ;
+
+# Объединение всех существующих аффиксов, то есть, получение системы склонения имён
+define Affixes Nominatives .o. Genetive .o. OtherCases .o. NumberInfl .o. Alternations .o. Phonetics;
+
+# Удаление символа границы морфемы
+define Cleanup "^" -> 0 || _ ;
+
+# Определение грамматики, объединяющей все написанные правила
+define Grammar Input .o. Affixes .o. Cleanup ;
+push Grammar
